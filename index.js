@@ -15,6 +15,7 @@ function timestampsPlugin(schema, options) {
     schema.virtual('createdAt')
       .get( function () {
         if (this._createdAt) return this._createdAt;
+        if (!this._id && this.id) this._id = new ObjectId(this.id);
         return this._createdAt = this._id.getTimestamp();
       });
     schema.pre('save', function (next) {
